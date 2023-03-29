@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <h2>home</h2>
-    <router-link to="/main">主要</router-link>
-    <router-link to="/login">登录</router-link>
-
+  <div class="app">
     <router-view></router-view>
   </div>
 </template>
@@ -12,4 +8,9 @@
 export default {}
 </script>
 
-<style></style>
+<style>
+.app {
+  width: 100vw;
+  height: 100vw;
+}
+</style>
