@@ -1,58 +1,73 @@
 <template>
   <div class="login-panel">
-    <h1 class="title">后台管理系统</h1>
-    <!-- tabs切换 -->
+    <!-- 顶部的标题 -->
+    <h1 class="title">弘源后台管理系统</h1>
+
+    <!-- 中间的tabs切换 -->
     <div class="tabs">
-      <el-tabs class="demo-tabs" type="border-card" stretch v-model="actionsName">
-        <el-tab-pane label="账号登录" name="account">
+      <el-tabs type="border-card" stretch v-model="activeName">
+        <!-- 1.账号登录的Pane -->
+        <el-tab-pane name="account">
           <template #label>
             <div class="label">
-              <el-icon><UserFilled /> </el-icon>
-              <span class="text">账号登录</span>
+              <el-icon><UserFilled /></el-icon>
+              <span class="text">帐号登录</span>
             </div>
           </template>
-          <!-- 输入框组件 -->
-          <paneAccount ref="accountRef"></paneAccount>
+          <pane-account ref="accountRef" />
         </el-tab-pane>
-        <el-tab-pane label="手机登录" name="phone">
+
+        <!-- 2.手机登录的Pane -->
+        <el-tab-pane name="phone">
           <template #label>
             <div class="label">
               <el-icon><Cellphone /></el-icon>
               <span class="text">手机登录</span>
             </div>
           </template>
-          <!-- 输入框组件 -->
-          <panePhone></panePhone>
+          <pane-phone />
         </el-tab-pane>
       </el-tabs>
     </div>
+
+    <!-- 底部区域 -->
     <div class="controls">
       <el-checkbox v-model="isRemPwd" label="记住密码" size="large" />
       <el-link type="primary">忘记密码</el-link>
     </div>
-    <el-button class="login-btn" type="primary" size="large" @click="handleLoginBtnClick">
+    <el-button
+      class="login-btn"
+      type="primary"
+      size="large"
+      @click="handleLoginBtnClick"
+    >
       立即登录
     </el-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import paneAccount from './pane-account.vue'
-import panePhone from './pane-phone.vue'
+import { localCache } from '@/utils/cache';
+import { ref,watch } from 'vue'
+import PaneAccount from './pane-account.vue'
+import PanePhone from './pane-phone.vue'
 
-const actionsName = ref('account')
+const activeName = ref('account')
+const accountRef = ref<InstanceType<typeof PaneAccount>>()
+//判断记住密码
 const isRemPwd = ref(false)
-// 拿到构造器返回的实例<InstanceType<typeof paneAccount>>
-const accountRef = ref<InstanceType<typeof paneAccount>>()
+watch(isRemPwd,(newValue) => {
+  localCache.setCache('isRemPwd',newValue)
+})
+
 
 function handleLoginBtnClick() {
-  if (actionsName.value === 'account') {
-    // 获取子组件实例
-    accountRef.value?.loginAction()
-    // 调用方法
+  if (activeName.value === 'account') {
+    //isRemPwd.value传递给子组件
+    accountRef.value?.loginAction(isRemPwd.value)
+
   } else {
-    console.log('phone')
+    console.log('用户在进行手机登录')
   }
 }
 </script>
