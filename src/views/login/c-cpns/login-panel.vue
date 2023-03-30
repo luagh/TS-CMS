@@ -11,7 +11,8 @@
               <span class="text">账号登录</span>
             </div>
           </template>
-          <paneAccount></paneAccount>
+          <!-- 输入框组件 -->
+          <paneAccount ref="accountRef"></paneAccount>
         </el-tab-pane>
         <el-tab-pane label="手机登录" name="phone">
           <template #label>
@@ -20,6 +21,7 @@
               <span class="text">手机登录</span>
             </div>
           </template>
+          <!-- 输入框组件 -->
           <panePhone></panePhone>
         </el-tab-pane>
       </el-tabs>
@@ -28,7 +30,7 @@
       <el-checkbox v-model="isRemPwd" label="记住密码" size="large" />
       <el-link type="primary">忘记密码</el-link>
     </div>
-    <el-button class="login-btn" type="primary" size="large" @click="LoginBtn">
+    <el-button class="login-btn" type="primary" size="large" @click="handleLoginBtnClick">
       立即登录
     </el-button>
   </div>
@@ -41,10 +43,14 @@ import panePhone from './pane-phone.vue'
 
 const actionsName = ref('account')
 const isRemPwd = ref(false)
+// 拿到构造器返回的实例<InstanceType<typeof paneAccount>>
+const accountRef = ref<InstanceType<typeof paneAccount>>()
 
-function LoginBtn() {
+function handleLoginBtnClick() {
   if (actionsName.value === 'account') {
-    console.log('user')
+    // 获取子组件实例
+    accountRef.value?.loginAction()
+    // 调用方法
   } else {
     console.log('phone')
   }

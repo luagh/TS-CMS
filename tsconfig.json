@@ -7,7 +7,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "noImplicitAny": false //默认any
+    "noImplicitAny": false,//默认any
+
   },
 
   "references": [
