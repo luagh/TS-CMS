@@ -1,6 +1,7 @@
 <template>
   <div class="login-panel">
     <h1 class="title">后台管理系统</h1>
+    <!-- tabs切换 -->
     <div class="tabs">
       <el-tabs class="demo-tabs" type="border-card" stretch v-model="actionsName">
         <el-tab-pane label="账号登录" name="account">
@@ -10,7 +11,7 @@
               <span class="text">账号登录</span>
             </div>
           </template>
-          <div>user</div>
+          <paneAccount></paneAccount>
         </el-tab-pane>
         <el-tab-pane label="手机登录" name="phone">
           <template #label>
@@ -19,7 +20,7 @@
               <span class="text">手机登录</span>
             </div>
           </template>
-          <div>phone</div>
+          <panePhone></panePhone>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -35,6 +36,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import paneAccount from './pane-account.vue'
+import panePhone from './pane-phone.vue'
+
 const actionsName = ref('account')
 const isRemPwd = ref(false)
 
