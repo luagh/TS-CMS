@@ -52,23 +52,23 @@ const accountRules: FormRules = {
 }
 
 // 3.执行帐号的登录逻辑
-// const formRef = ref<InstanceType<typeof ElForm>>()
+ const formRef = ref<InstanceType<typeof ElForm>>()
 // const loginStore = useLoginStore()
 function loginAction() {
   console.log('dfdfdfdfdfdf',account.name,account.password);
 
-  // formRef.value?.validate((valid) => {
-  //   if (valid) {
-  //     // 1.获取用户输入的帐号和密码
-  //     const name = account.name
-  //     const password = account.password
+  formRef.value?.validate((valid) => {
+    if (valid) {
+      // 1.获取用户输入的帐号和密码
+      const name = account.name
+      const password = account.password
 
-  //     // 2.向服务器发送网络请求(携带账号和密码)
-  //     loginStore.loginAccountAction({ name, password })
-  //   } else {
-  //     ElMessage.error('Oops, 请您输入正确的格式后再操作~~.')
-  //   }
-  // })
+      // 2.向服务器发送网络请求(携带账号和密码)
+     // loginStore.loginAccountAction({ name, password })
+    } else {
+      ElMessage.error('Oops, 请您输入正确的格式后再操作~~.')
+    }
+  })
 }
 
 defineExpose({
