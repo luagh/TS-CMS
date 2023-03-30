@@ -2,22 +2,49 @@
   <div class="login-panel">
     <h1 class="title">后台管理系统</h1>
     <div class="tabs">
-      <el-tabs class="demo-tabs" type="border-card" stretch>
-        <el-tab-pane label="账号登录" name="first">User</el-tab-pane>
-        <el-tab-pane label="手机登录" name="second">Config</el-tab-pane>
+      <el-tabs class="demo-tabs" type="border-card" stretch v-model="actionsName">
+        <el-tab-pane label="账号登录" name="account">
+          <template #label>
+            <div class="label">
+              <el-icon><UserFilled /> </el-icon>
+              <span class="text">账号登录</span>
+            </div>
+          </template>
+          <div>user</div>
+        </el-tab-pane>
+        <el-tab-pane label="手机登录" name="phone">
+          <template #label>
+            <div class="label">
+              <el-icon><Cellphone /></el-icon>
+              <span class="text">手机登录</span>
+            </div>
+          </template>
+          <div>phone</div>
+        </el-tab-pane>
       </el-tabs>
     </div>
     <div class="controls">
       <el-checkbox v-model="isRemPwd" label="记住密码" size="large" />
       <el-link type="primary">忘记密码</el-link>
     </div>
-    <el-button class="login-btn" type="primary" size="large"> 立即登录 </el-button>
+    <el-button class="login-btn" type="primary" size="large" @click="LoginBtn">
+      立即登录
+    </el-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+const actionsName = ref('account')
 const isRemPwd = ref(false)
+
+function LoginBtn() {
+  if (actionsName.value === 'account') {
+    console.log('user')
+  } else {
+    console.log('phone')
+  }
+}
 </script>
 
 <style lang="less" scoped>
