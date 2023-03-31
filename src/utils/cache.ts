@@ -1,3 +1,4 @@
+//实现本地缓存和会话缓存的功能
 enum CacheType {
   Local,
   Session
