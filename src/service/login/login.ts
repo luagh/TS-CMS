@@ -19,3 +19,10 @@ export function getUserInfoById(id:number){
     // }
   })
 }
+
+// 根据拿到对应的id传入菜单
+export function getUserMenusByRoleId(id:number){
+  return hyRequest.get({
+    url:`/role/${id}/menu`
+  })
+}
