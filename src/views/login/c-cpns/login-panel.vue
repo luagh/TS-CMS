@@ -56,6 +56,7 @@ const activeName = ref('account')
 const accountRef = ref<InstanceType<typeof PaneAccount>>()
 //判断记住密码
 const isRemPwd = ref(false)
+//watch 监听 isRemPwd 的变化，并在变化时将其值存入本地缓存中
 watch(isRemPwd,(newValue) => {
   localCache.setCache('isRemPwd',newValue)
 })
