@@ -1,32 +1,38 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="200px">
-        <mainMenu>
-
-        </mainMenu>
+      <el-aside :width="isFold ? '60px' : '210px'">
+        <main-menu :is-fold="isFold" />
       </el-aside>
       <el-container>
         <el-header height="50px">
-          <mainHeader>
-
-          </mainHeader>
+          <main-header @fold-change="handleFoldChange" />
         </el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import mainMenu from '@/components/main-menu/main-menu.vue'
-import mainHeader from '@/components/main-header/main-header.vue'
+import { ref } from 'vue'
+import MainMenu from '@/components/main-menu/main-menu.vue'
+import MainHeader from '@/components/main-header/main-header.vue'
+
+// 处理main-header中折叠的变化
+const isFold = ref(false)
+function handleFoldChange(flag: boolean) {
+  isFold.value = flag
+}
 </script>
 
 <style lang="less" scoped>
 .main {
   height: 100%;
 }
+
 .main-content {
   height: 100%;
 
