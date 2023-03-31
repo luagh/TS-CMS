@@ -1,9 +1,17 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="200px">Aside</el-aside>
+      <el-aside width="200px">
+        <mainMenu>
+
+        </mainMenu>
+      </el-aside>
       <el-container>
-        <el-header height="50px">Header</el-header>
+        <el-header height="50px">
+          <mainHeader>
+
+          </mainHeader>
+        </el-header>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
@@ -11,7 +19,8 @@
 </template>
 
 <script setup lang="ts">
-
+import mainMenu from '@/components/main-menu/main-menu.vue'
+import mainHeader from '@/components/main-header/main-header.vue'
 </script>
 
 <style lang="less" scoped>
