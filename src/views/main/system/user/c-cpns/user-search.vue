@@ -24,7 +24,6 @@
             />
           </el-form-item>
         </el-col>
-
         <el-col :span="8">
           <el-form-item label="状态" prop="enable">
             <el-select
@@ -48,6 +47,12 @@
         </el-col>
       </el-row>
     </el-form>
+     <!-- 2.重置和搜索的按钮 -->
+     <div class="btns">
+      <el-button icon="Refresh" >重置</el-button>
+      <el-button icon="Search" type="primary">查询</el-button
+      >
+    </div>
   </div>
 </template>
 
@@ -60,6 +65,14 @@ padding: 20px;
 .el-form-item {
     padding: 20px 30px;
     margin-bottom: 0;
+  }
+  .btns {
+    text-align: right;
+    padding: 0 50px 10px 0;
+
+    .el-button {
+      height: 36px;
+    }
   }
 }
 
