@@ -1,10 +1,11 @@
 <template>
   <div class="curmb">
     <el-breadcrumb separator-icon="ArrowRight">
-    <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-    <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-    <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-    <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+    <template v-for="item in breadcrumbs" :key="item.name">
+      <el-breadcrumb-item :to="item.path">
+          {{ item.name }}
+      </el-breadcrumb-item>
+    </template>
   </el-breadcrumb>
   </div>
 </template>
