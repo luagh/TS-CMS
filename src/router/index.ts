@@ -1,7 +1,7 @@
 import { LOGIN_TOKEN } from '@/global/constants'
 import { localCache } from '@/utils/cache'
 import { createRouter, createWebHashHistory } from 'vue-router'
-//配置注册路由和映射路由 下载npm i coderwhy -g 插件
+//配置注册路由和映射路由
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
