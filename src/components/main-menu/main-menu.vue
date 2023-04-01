@@ -47,6 +47,7 @@ import useLoginStore from '@/store/login/login'
 import { useRouter,useRoute } from 'vue-router'
 import { ref } from "vue";
 import {  mapPathToMenu } from '@/utils/map-menus';
+import { computed } from '@vue/reactivity';
 
 // 0.定义props
 defineProps({
@@ -69,8 +70,10 @@ function handleItemClick(item: any) {
 
 // 3.ELmenu默认选中菜单
 const route =useRoute()
- const pathMenu= mapPathToMenu(route.path,userMenus)
-const defaultactive=ref(pathMenu.id+'')
+const defaultactive= computed( ()=>{
+  const pathMenu= mapPathToMenu(route.path,userMenus)
+  return pathMenu.id+''
+})
 </script>
 <style lang="less" scoped>
 .main-menu {

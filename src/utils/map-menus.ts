@@ -1,3 +1,4 @@
+import { ITEM_RENDER_EVT } from 'element-plus/es/components/virtual-list/src/defaults'
 import type { RouteRecordRaw } from 'vue-router'
 
 function loadLocalRoutes() {
@@ -32,7 +33,13 @@ export function mapMenusToRoutes(userMenus: any[]) {
   for (const menu of userMenus) {
     for (const submenu of menu.children) {
       const route = localRoutes.find((item) => item.path === submenu.url)
-       if(route) routes.push(route)
+       if(route){
+        // 给route的顶层菜单增加重定向功能(但是只需要添加一次即可)
+        if(! routes.find((item) => item.path === submenu.url)){
+          routes.push({path:menu.url,redirect:route.path})
+        }
+        routes.push(route)
+       }
         // 记录第一个被匹配到的菜单
           if(!firstMenu && route) firstMenu = submenu
 
@@ -54,6 +61,28 @@ export function mapPathToMenu (path:string,userMenus:any[]){
       }
     }
   }
+}
+
+interface IBreadcrumbs {
+  name:string
+  path:string
+}
+
+export function mapPathToBreadcrumbs(path:string,userMenus:any[]){
+      //  定义面包屑
+      const breadcrumbs:IBreadcrumbs []=[]
+
+      for(const menu of userMenus){
+        for(const submenu of menu.children){
+          if(submenu.url === path){
+            // 1.顶层菜单
+            breadcrumbs.push({name:menu.name,path:menu.url})
+            // 2.匹配菜单
+            breadcrumbs.push({name:submenu.name,path:submenu.url})
+          }
+        }
+      }
+      return breadcrumbs
 }
 
 
