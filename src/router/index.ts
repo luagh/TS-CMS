@@ -1,5 +1,6 @@
 import { LOGIN_TOKEN } from '@/global/constants'
 import { localCache } from '@/utils/cache'
+import { firstMenu } from '@/utils/map-menus'
 import { createRouter, createWebHashHistory } from 'vue-router'
 //配置注册路由和映射路由
 const router = createRouter({
@@ -31,6 +32,10 @@ if(to.path.startsWith('/main') &&!token){
    return '/login'
 }
 
+  //  如果是进入到main
+  if(to.path === '/main'){
+    return firstMenu?.url
+  }
 })
 
 

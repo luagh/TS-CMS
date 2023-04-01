@@ -32,6 +32,9 @@ export function mapMenusToRoutes(userMenus: any[]) {
   for (const menu of userMenus) {
     for (const submenu of menu.children) {
       const route = localRoutes.find((item) => item.path === submenu.url)
+       if(route) routes.push(route)
+        // 记录第一个被匹配到的菜单
+          if(!firstMenu && route) firstMenu = submenu
 
     }
   }
