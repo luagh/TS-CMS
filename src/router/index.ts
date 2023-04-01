@@ -15,18 +15,7 @@ const router = createRouter({
     },
     {
       path: '/main',
-      component: () => import('../views/main/main.vue'),
-      children: [
-
-        {
-          path: '/main/system/user',
-          component: () => import('../views/main/system/user/user.vue')
-        },
-        {
-          path: '/main/system/role',
-          component: () => import('../views/main/system/role/role.vue')
-        }
-      ]
+      component: () => import('../views/main/main.vue')
     },
     {
       path: '/:pathMatch(.*)',
