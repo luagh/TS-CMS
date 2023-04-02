@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3 class="title">用户列表</h3>
-      <el-button type="primary">新建用户</el-button>
+      <el-button type="primary" @click="handleNewUserClick">新建用户</el-button>
     </div>
     <div class="table">
       <el-table :data="usersList" border style="width: 100%">
@@ -132,11 +132,13 @@ function fetchUserListData(formData: any = {}) {
   systemStore.postUsersListAction(queryInfo)
 }
 
-// 点击删除
+// 点击删除/新建/编辑的操作
  function handleDeleteBtnClick(id:number){
  systemStore.delelteUserByIdAction(id)
  }
-
+function handleNewUserClick(){
+emit('newClick')
+}
 
 defineExpose({ fetchUserListData })
 </script>

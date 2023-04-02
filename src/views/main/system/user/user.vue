@@ -2,12 +2,9 @@
   <div class="user">
     <user-search
       @query-click="handleQueryClick"
-      @reset-click="handleResetClick"
-    />
-    <user-content
-      ref="contentRef"
-
-    />
+      @reset-click="handleResetClick"/>
+    <user-content ref="contentRef" @new-click="handleNewClick"
+    @edit-click="handleEditClick"/>
     <user-modal ref="modalRef" />
   </div>
 </template>
@@ -16,7 +13,7 @@
 import { ref } from 'vue'
 import UserSearch from './c-cpns/user-search.vue'
 import UserContent from './c-cpns/user-content.vue'
-
+import userModal from './c-cpns/user-modal.vue';
 
 // 对content组件的操作
 const contentRef = ref<InstanceType<typeof UserContent>>()
@@ -27,6 +24,15 @@ function handleResetClick() {
   contentRef.value?.fetchUserListData()
 }
 
+// 对modal组件的操作
+const modalRef =ref<InstanceType<typeof userModal>>()
+  function handleNewClick (){
+    modalRef.value?.setModalVisible()
+  }
+
+  function handleEditClick (){
+
+  }
 
 </script>
 
