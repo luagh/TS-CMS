@@ -61,8 +61,7 @@
         </el-table-column>
         <el-table-column align="center" label="操作" width="150px">
           <template #default="scope">
-            <el-button
-              size="small"
+            <el-button  size="small"
               icon="Edit"
               type="primary"
               text>
@@ -72,7 +71,9 @@
               size="small"
               icon="Delete"
               type="danger"
-              text>
+              text
+              @click="handleDeleteBtnClick(scope.row.id)"
+              >
               删除
             </el-button>
           </template>
@@ -131,6 +132,10 @@ function fetchUserListData(formData: any = {}) {
   systemStore.postUsersListAction(queryInfo)
 }
 
+// 点击删除
+ function handleDeleteBtnClick(id:number){
+ systemStore.delelteUserByIdAction(id)
+ }
 
 
 defineExpose({ fetchUserListData })

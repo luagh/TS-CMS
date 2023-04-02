@@ -8,3 +8,8 @@ export function postUserListData(queryInfo:any){
  })
  }
 
+export function deleteUserById(id:number){
+  return hyRequest.delete({
+    url: `/user/${id}`
+  })
+}
