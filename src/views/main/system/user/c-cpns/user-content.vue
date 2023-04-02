@@ -62,24 +62,31 @@ import { storeToRefs } from 'pinia';
 import { formatUTC } from '@/utils/format'
 import { ref } from 'vue';
 // 1.发起action，请求usersList的数据
-const systemStore =useSystemStore()
-systemStore.postUsersListAction()
-
-// 2.获取usersList数据,进行展示
-const { usersList ,usersTotalCount} =storeToRefs(systemStore)
-// 3.页码相关的逻辑
+const systemStore = useSystemStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
+fetchUserListData()
 
-function handleSizeChange(){
-  console.log('page-size change',pageSize.value);
+// 2.获取usersList数据,进行展示
+const { usersList, usersTotalCount } = storeToRefs(systemStore)
 
+// 3.页码相关的逻辑
+function handleSizeChange() {
+  fetchUserListData()
 }
-function handleCurrentChange (){
-  console.log('current-size change',currentPage.value);
-
+function handleCurrentChange() {
+  fetchUserListData()
 }
 
+//4定义函数，用于发送网络请求
+function fetchUserListData(){
+//.获取offset/size
+const size =pageSize.value
+const offset=(currentPage.value-1)*size
+const info={size,offset}
+//发起网咯请求
+systemStore.postUsersListAction(info)
+}
 
 </script>
 
