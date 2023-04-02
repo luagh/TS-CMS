@@ -39,7 +39,18 @@
         </el-table-column>
       </el-table>
     </div>
-      <div class="pagination">分页</div>
+      <div class="pagination">
+        <el-pagination
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="[10, 20, 30]"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="usersTotalCount"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+
+      </div>
 
   </div>
 </template>
@@ -49,12 +60,26 @@
 import useSystemStore from '@/store/main/system/system';
 import { storeToRefs } from 'pinia';
 import { formatUTC } from '@/utils/format'
+import { ref } from 'vue';
 // 1.发起action，请求usersList的数据
 const systemStore =useSystemStore()
 systemStore.postUsersListAction()
 
 // 2.获取usersList数据,进行展示
-const { usersList} =storeToRefs(systemStore)
+const { usersList ,usersTotalCount} =storeToRefs(systemStore)
+// 3.页码相关的逻辑
+const currentPage = ref(1)
+const pageSize = ref(10)
+
+function handleSizeChange(){
+  console.log('page-size change',pageSize.value);
+
+}
+function handleCurrentChange (){
+  console.log('current-size change',currentPage.value);
+
+}
+
 
 </script>
 
@@ -83,6 +108,11 @@ const { usersList} =storeToRefs(systemStore)
     margin-left: 0;
     padding: 5px 8px;
   }
+}
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
 </style>
