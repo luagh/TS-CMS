@@ -54,7 +54,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">
+        <el-button type="primary" @click="handleConfirmClick">
           确定
         </el-button>
       </span>
@@ -67,6 +67,7 @@
 import { reactive, ref } from 'vue';
 import useMainStore from '@/store/main/main'
 import { storeToRefs } from 'pinia';
+import useSystemStore from '@/store/main/system/system'
 
 // 1.定义内部的属性
 const dialogVisible = ref(false)
@@ -82,10 +83,19 @@ const formData= reactive<any>({
 // 获取roLes,/departments数据
 const mainStore =useMainStore()
 const { entireRoles,entireDepartments} =storeToRefs(mainStore)
-
+const systemStore =useSystemStore()
+//定义设置dialogVisible方法
 function  setModalVisible(){
   dialogVisible.value=true
 }
+
+// 点击确定的逻辑
+function handleConfirmClick (){
+  dialogVisible.value=false
+  systemStore.newUserDataAction(formData)
+}
+
+
 // 暴露的属性和方法
 defineExpose({ setModalVisible })
 </script>
