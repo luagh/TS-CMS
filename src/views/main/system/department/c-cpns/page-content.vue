@@ -121,7 +121,7 @@ function fetchPageListData(formData: any = {}) {
 
 // 5.删除/新建/编辑的操作
 function handleDeleteBtnClick(id: number) {
-  systemStore.deleteUserByIdAction(id)
+  systemStore.deletePageByIdAction('department',id)
 }
 function handleNewUserClick() {
   emit('newClick')
