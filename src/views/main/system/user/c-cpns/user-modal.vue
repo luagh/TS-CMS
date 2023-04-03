@@ -1,6 +1,6 @@
 <template>
   <div class="user-modal">
-    <el-dialog v-model="dialogVisible" title="Warning" width="30%" center>
+    <el-dialog v-model="dialogVisible" :title="isNewRef ? '新建用户' : '编辑用户'"  width="30%" center>
       <div class="form">
         <el-form>
         <el-form-item label="用户名" prop="name">
@@ -12,7 +12,7 @@
               placeholder="请输入真实姓名"
             />
           </el-form-item>
-          <el-form-item  label="密码" prop="password">
+          <el-form-item v-if="isNewRef"  label="密码" prop="password" >
             <el-input
               v-model="formData.password"
               placeholder="请输入密码"
@@ -79,20 +79,39 @@ const formData= reactive<any>({
      roleId: '',
      departmentId: ''
 })
-
+const isNewRef =ref(true)
+const editData =ref()
 // 获取roLes,/departments数据
 const mainStore =useMainStore()
 const { entireRoles,entireDepartments} =storeToRefs(mainStore)
 const systemStore =useSystemStore()
 //定义设置dialogVisible方法
-function  setModalVisible(){
+function  setModalVisible(isNew:boolean=true,itemData?:any){
   dialogVisible.value=true
+  isNewRef.value=isNew
+  if(isNew && itemData){//编辑数据时
+    for(const key in formData){
+      formData[key] =itemData[key]
+    }
+    editData.value=itemData
+  }else{//新增数据
+    for(const key in formData){
+      formData[key] =''
+    }
+    editData.value=null
+  }
 }
 
 // 点击确定的逻辑
 function handleConfirmClick (){
   dialogVisible.value=false
-  systemStore.newUserDataAction(formData)
+  if(!isNewRef.value && editData.value){
+    // 编辑用户的数据
+    systemStore.editUserDataAction(editData.value.id,formData)
+  }else{
+//  创建新的用户
+    systemStore.newUserDataAction(formData)
+  }
 }
 
 

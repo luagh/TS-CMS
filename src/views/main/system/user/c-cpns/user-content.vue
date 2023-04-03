@@ -64,7 +64,7 @@
             <el-button  size="small"
               icon="Edit"
               type="primary"
-              text>
+              text @click="handleEditBtnClick(scope.row)">
               编辑
             </el-button>
             <el-button
@@ -139,6 +139,9 @@ function fetchUserListData(formData: any = {}) {
 function handleNewUserClick(){
 emit('newClick')
 }
+  function handleEditBtnClick(itemData:any){
+ emit('editClick',itemData)
+  }
 
 defineExpose({ fetchUserListData })
 </script>

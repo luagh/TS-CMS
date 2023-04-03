@@ -30,8 +30,8 @@ const modalRef =ref<InstanceType<typeof userModal>>()
     modalRef.value?.setModalVisible()
   }
 
-  function handleEditClick (){
-
+  function handleEditClick (itemData:any){
+    modalRef.value?.setModalVisible(itemData)
   }
 
 </script>
