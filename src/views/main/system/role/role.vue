@@ -4,13 +4,26 @@
      @query-click="handleQueryClick"
      @reset-click="handleResetClick"
     />
-    <page-content :content-config="contentConfig"
+    <page-content
+     :content-config="contentConfig"
     ref="contentRef"
       @new-click="handleNewClick"
       @edit-click="handleEditClick"
 
     ></page-content>
-    <page-modal ref="modalRef" :modal-config="modalConfig"></page-modal>
+    <page-modal ref="modalRef" :modal-config="modalConfig">
+       <template #menulist>
+        <el-tree
+          ref="treeRef"
+          :data="entireMenus"
+          show-checkbox
+          node-key="id"
+          :props="{ children: 'children', label: 'name' }"
+
+        />
+       </template>
+
+    </page-modal>
 
   </div>
 </template>
@@ -24,11 +37,20 @@ import pageModal from '@/components/page-modal/page-modal.vue'
 import modalConfig from './config/modal.config'
 import usePageContent from '@/hooks/usePageContent'
 import usePageModal from '@/hooks/usePageModal'
+import { storeToRefs } from 'pinia'
+import useMainStore from '@/store/main/main'
 
 
 // 逻辑关系
 const {contentRef, handleQueryClick, handleResetClick} =usePageContent()
 const { modalRef, handleNewClick, handleEditClick}=usePageModal()
+
+//获取完整的菜单
+const mainStore =useMainStore()
+
+const { entireMenus} =storeToRefs(mainStore)
+
+
 </script>
 
 <style lang="less" scoped>

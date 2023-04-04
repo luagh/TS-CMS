@@ -38,6 +38,7 @@
                   </template>
                 </el-select>
               </template>
+              <!-- 自定义插槽 -->
               <template v-if="item.type === 'custom'">
                 <slot :name="item.slotName"></slot>
               </template>
