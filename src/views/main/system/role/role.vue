@@ -39,23 +39,32 @@ import usePageContent from '@/hooks/usePageContent'
 import usePageModal from '@/hooks/usePageModal'
 import { storeToRefs } from 'pinia'
 import useMainStore from '@/store/main/main'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
+import type { ElTree } from 'element-plus'
+import { mapMenuListToIds } from '@/utils/map-menus'
 
 
 // 逻辑关系
 const {contentRef, handleQueryClick, handleResetClick} =usePageContent()
-const { modalRef, handleNewClick, handleEditClick}=usePageModal()
+const { modalRef, handleNewClick, handleEditClick}=usePageModal(editCallback)
 
 //获取完整的菜单
-const mainStore =useMainStore()
-const { entireMenus} =storeToRefs(mainStore)
-const otherInfo =ref({})
- function handleElTreeCheck (data1:any,data2:any){
+const mainStore = useMainStore()
+const { entireMenus } = storeToRefs(mainStore)
+const otherInfo = ref({})
+function handleElTreeCheck(data1: any, data2: any) {
   const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
-  console.log(data2.checkedKeys);
+  console.log(data2.checkedKeys)
+  otherInfo.value = { menuList }
+}
 
-  otherInfo.value={menuList}
- }
+const treeRef =ref<InstanceType<typeof ElTree>>()
+function editCallback (itemData:any){
+  nextTick(()=>{
+    const menuIds =mapMenuListToIds(itemData.menuList)
+    treeRef.value?.setCheckedKeys(menuIds)
+  })
+}
 
 </script>
 
