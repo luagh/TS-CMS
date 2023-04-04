@@ -1,37 +1,57 @@
 <template>
   <div class="department">
-    <pageSearch
-    :searchConfig="searchConfig"
-    @query-click="handleQueryClick"
-    @reset-click="handleResetClick">
-    </pageSearch>
-    <pageContent
-    :contentConfig="contentConfig"
-    ref="contentRef"
-    @new-click="handleNewClick"
-    @edit-click="handleEditClick">
-    <template #leader="scope">
-     <span class="leader">hhh:{{ scope.row[scope.prop] }}</span>
-    </template>
-    <template #parent="scope">
-      <span class="parent">www:{{ scope.row[scope.prop] }}</span>
-    </template>
-    </pageContent>
-
-    <pageModal ref="modalRef"></pageModal>
+    <page-search
+      :search-config="searchConfig"
+      @query-click="handleQueryClick"
+      @reset-click="handleResetClick"
+    />
+    <page-content
+      :content-config="contentConfig"
+      ref="contentRef"
+      @new-click="handleNewClick"
+      @edit-click="handleEditClick"
+    >
+      <template #leader="scope">
+        <span class="leader">哈哈哈: {{ scope.row[scope.prop] }}</span>
+      </template>
+      <template #parent="scope">
+        <span class="parent">呵呵呵: {{ scope.row[scope.prop] }}</span>
+      </template>
+    </page-content>
+    <page-modal :modal-config="modalConfigRef" ref="modalRef" />
   </div>
 </template>
 
 <script setup lang="ts" name="department">
-import pageSearch from '@/components/page-search/page-search.vue';
-import pageContent from '@/components/page-content/page-content.vue';
-import pageModal from './c-cpns/page-modal.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue'
+import useMainStore from '@/store/main/main'
 
-import  searchConfig from './config/search.config'
-import contentConfig from './config/content.config';
+import PageSearch from '@/components/page-search/page-search.vue'
+import PageContent from '@/components/page-content/page-content.vue'
+import PageModal from '@/components/page-modal/page-modal.vue'
+
+import searchConfig from './config/search.config'
+import contentConfig from './config/content.config'
+import modalConfig from './config/modal.config'
+
+
+// 对modalConfig进行操作
+const modalConfigRef = computed(() => {
+  const mainStore = useMainStore()
+  const departments = mainStore.entireDepartments.map((item) => {
+    return { label: item.name, value: item.id }
+  })
+  modalConfig.formItems.forEach((item) => {
+    if (item.prop === 'parentId') {
+      item.options.push(...departments)
+    }
+  })
+
+  return modalConfig
+})
+
 // 点击search, content的操作
-const contentRef = ref<InstanceType<typeof pageContent>>()
+const contentRef = ref<InstanceType<typeof PageContent>>()
 function handleQueryClick(queryInfo: any) {
   contentRef.value?.fetchPageListData(queryInfo)
 }
@@ -39,7 +59,7 @@ function handleResetClick() {
   contentRef.value?.fetchPageListData()
 }
 // 点击content, modal的操作
-const modalRef = ref<InstanceType<typeof pageModal >>()
+const modalRef = ref<InstanceType<typeof PageModal >>()
  function handleNewClick(){
 modalRef.value?.setModalVisible()
  }
@@ -50,5 +70,11 @@ modalRef.value?.setModalVisible()
 </script>
 
 <style scoped>
+.leader {
+  color: red;
+}
 
+.parent {
+  color: blue;
+}
 </style>
