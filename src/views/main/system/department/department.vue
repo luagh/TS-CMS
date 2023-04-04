@@ -1,14 +1,23 @@
 <template>
   <div class="department">
-    <pageSearch :searchConfig="searchConfig"  @query-click="handleQueryClick"
+    <pageSearch
+    :searchConfig="searchConfig"
+    @query-click="handleQueryClick"
     @reset-click="handleResetClick">
-  </pageSearch>
+    </pageSearch>
     <pageContent
     :contentConfig="contentConfig"
     ref="contentRef"
     @new-click="handleNewClick"
-      @edit-click="handleEditClick">
+    @edit-click="handleEditClick">
+    <template #leader="scope">
+     <span class="leader">hhh:{{ scope.row[scope.prop] }}</span>
+    </template>
+    <template #parent="scope">
+      <span class="parent">www:{{ scope.row[scope.prop] }}</span>
+    </template>
     </pageContent>
+
     <pageModal ref="modalRef"></pageModal>
   </div>
 </template>
