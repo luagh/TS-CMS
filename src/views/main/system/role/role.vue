@@ -61,7 +61,7 @@ function handleElTreeCheck(data1: any, data2: any) {
 const treeRef =ref<InstanceType<typeof ElTree>>()
 function editCallback (itemData:any){
   nextTick(()=>{
-    const menuIds =mapMenuListToIds(itemData.menuList)
+    const menuIds = mapMenuListToIds(itemData.menuList)
     treeRef.value?.setCheckedKeys(menuIds)
   })
 }
