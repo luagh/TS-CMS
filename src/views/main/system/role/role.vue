@@ -11,7 +11,7 @@
       @edit-click="handleEditClick"
 
     ></page-content>
-    <page-modal ref="modalRef" :modal-config="modalConfig">
+    <page-modal ref="modalRef" :other-info="otherInfo" :modal-config="modalConfig">
        <template #menulist>
         <el-tree
           ref="treeRef"
@@ -19,7 +19,7 @@
           show-checkbox
           node-key="id"
           :props="{ children: 'children', label: 'name' }"
-
+          @check="handleElTreeCheck"
         />
        </template>
 
@@ -39,6 +39,7 @@ import usePageContent from '@/hooks/usePageContent'
 import usePageModal from '@/hooks/usePageModal'
 import { storeToRefs } from 'pinia'
 import useMainStore from '@/store/main/main'
+import { ref } from 'vue'
 
 
 // 逻辑关系
@@ -47,9 +48,14 @@ const { modalRef, handleNewClick, handleEditClick}=usePageModal()
 
 //获取完整的菜单
 const mainStore =useMainStore()
-
 const { entireMenus} =storeToRefs(mainStore)
+const otherInfo =ref({})
+ function handleElTreeCheck (data1:any,data2:any){
+  const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
+  console.log(data2.checkedKeys);
 
+  otherInfo.value={menuList}
+ }
 
 </script>
 
