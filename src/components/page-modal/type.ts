@@ -8,5 +8,11 @@ export interface IModalConfig {
 }
 
 export interface IModalProps {
-  modalConfig :IModalConfig
+  modalConfig: {
+    header: {
+      newTitle: string
+      editTitle: string
+    }
+    formItems: any[]
+  }
 }

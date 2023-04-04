@@ -73,7 +73,7 @@ interface IModalProps {
     }
     formItems: any[]
   }
-  otherInfo?: any
+
 }
 
 // 0.定义props
@@ -116,21 +116,16 @@ function setModalVisible(isNew: boolean = true, itemData?: any) {
 function handleConfirmClick() {
   dialogVisible.value = false
 
-  let infoData = formData
-  if (props.otherInfo) {
-    infoData = { ...infoData, ...props.otherInfo }
-  }
-
   if (!isNewRef.value && editData.value) {
     // 编辑用户的数据
     systemStore.editPageDataAction(
       props.modalConfig.pageName,
       editData.value.id,
-      infoData
+      formData
     )
   } else {
     // 创建新的部门
-    systemStore.newPageDataAction(props.modalConfig.pageName, infoData)
+    systemStore.newPageDataAction(props.modalConfig.pageName, formData)
   }
 }
 
