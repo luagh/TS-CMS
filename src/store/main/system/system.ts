@@ -1,5 +1,6 @@
 import { deletePageById, deleteUserById, editPageData, editUserData, newUserData, postPageListData, postUserListData } from '@/service/main/system/system'
 import { defineStore} from 'pinia'
+import useMainStore from '../main'
 import type { ISystemState } from './type'
 
 
@@ -51,6 +52,9 @@ const  useSystemStore =defineStore('system',{
     const deleteResult =await deletePageById(pageName,id)
     console.log(deleteResult)
     this.postPageListAction(pageName,{offset:0,size:10})
+    // 获取完整的数据
+    const mainStore = useMainStore()
+    mainStore.fetchEntireDataAction()
   },
 
 
@@ -58,6 +62,9 @@ const  useSystemStore =defineStore('system',{
     const newResult =await this.newPageDataAction(pageName,pageInfo)
     console.log(newResult);
     this.postPageListAction(pageName,{offset:0,size:10})
+    // 获取完整的数据
+    const mainStore = useMainStore()
+    mainStore.fetchEntireDataAction()
   },
   async editPageDataAction (pageName:string, id:number,pageInfo:any){
          //更新用户数据
@@ -66,11 +73,10 @@ const  useSystemStore =defineStore('system',{
 
          //  重新请求数据
          this.postPageListAction(pageName,{offset:0,size:10})
+         // 获取完整的数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
       }
-
-
-
-
     }
 })
 
