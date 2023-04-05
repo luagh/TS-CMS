@@ -113,6 +113,15 @@ const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
 const systemStore = useSystemStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
+
+systemStore.$onAction( ({name,after}) => {
+  after(() => {
+    name === 'deletePageByIdAction' ||
+      name === 'editPageDataAction' ||
+      name === 'newPageDataAction'
+  })
+  currentPage.value=1
+})
 fetchPageListData()
 
 // 2.获取usersList数据,进行展示
@@ -151,6 +160,10 @@ function handleNewUserClick() {
 function handleEditBtnClick(itemData: any) {
   emit('editClick', itemData)
 }
+
+// 6.监听systemstore中的actions被执行
+
+
 
 defineExpose({ fetchPageListData })
 </script>
