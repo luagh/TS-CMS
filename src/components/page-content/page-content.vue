@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3 class="title">{{ contentConfig?.header?.title ?? '数据列表'}}</h3>
-      <el-button type="primary" @click="handleNewUserClick">
+      <el-button v-if="isCreate" type="primary" @click="handleNewUserClick">
         {{contentConfig?.header?.btnTitle?? '新建数据'}}</el-button>
     </div>
     <div class="table">
@@ -19,6 +19,7 @@
         <el-table-column  align="center" v-bind="item">
           <template #default="scope">
             <el-button
+            v-if="isUpdate"
                   size="small"
                   icon="Edit"
                   type="primary"
@@ -28,6 +29,7 @@
                   编辑
                 </el-button>
                 <el-button
+                v-if="isDelete"
                   size="small"
                   icon="Delete"
                   type="danger"
@@ -77,6 +79,8 @@ import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { ref } from 'vue'
 
+import usePermissions from '@/hooks/usePermissions';
+
 interface IProps{
   contentConfig:{
     pageName:string
@@ -94,6 +98,16 @@ const props =defineProps<IProps>()
 
 // 定义事件
 const emit = defineEmits(['newClick', 'editClick'])
+
+
+//获取是否有对应的增刚改查的权限
+
+const isCreate = usePermissions(`${props.contentConfig.pageName}:create`)
+const isDelete = usePermissions(`${props.contentConfig.pageName}:delete`)
+const isUpdate = usePermissions(`${props.contentConfig.pageName}:update`)
+const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
+
+
 
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
@@ -114,6 +128,9 @@ function handleCurrentChange() {
 
 // 4.定义函数, 用于发送网络请求
 function fetchPageListData(formData: any = {}) {
+
+  if(! isQuery)return
+
   // 1.获取offset/size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
